@@ -1,78 +1,527 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MM Design | Luxury Car Wrapping</title>
+  <title>MM Design</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Helvetica Neue', sans-serif;
-      background-color: #000;
-      color: #fff;
+      font-family: "Orbitron", sans-serif;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 1.5;
+      color: white;
+      background: #000;
+      overflow-x: hidden;
     }
 
     header {
-      text-align: center;
-      padding: 60px 20px 30px;
-      background: #000;
-    }
-
-    header h1 {
-      font-size: 48px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    header p {
-      font-size: 20px;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    section.gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 16px;
-      padding: 40px;
-    }
-
-    .gallery img {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
+      height: 80px;
+      padding: 0 2em;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      z-index: 1000;
+      border-bottom: 4px solid #00ffff;
+      box-shadow: 0 2px 8px 0 #00ffff;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .menu-icon {
+      font-size: 2em;
+      cursor: pointer;
+      user-select: none;
+      position: absolute;
+      left: 1em;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1001;
+    }
+
+    .logo-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .logo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      height: 4vw;
+      max-height: 200px;
+      width: auto;
+      filter: invert(1);
+      mix-blend-mode: screen;
+    }
+
+    .header-contact {
+      position: absolute;
+      right: 1em;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: right;
+      font-size: 1em;
+      line-height: 1.2em;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0;
+      background-color: #202020;
+      overflow-x: hidden;
+      transition: width 0.3s ease;
+      padding-top: 80px;
+      z-index: 1100;
+    }
+
+    .sidebar a {
+      padding: 1em;
+      text-decoration: none;
+      font-size: 1.5em;
+      color: white;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #111;
+      transform: translateX(5px);
+    }
+
+    .content {
+      padding-top: 0;
+      background-color: #000;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      display: none;
+      padding: 0;
       border-radius: 8px;
-      transition: transform 0.3s ease;
+      color: white;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s, transform 0.8s;
     }
 
-    .gallery img:hover {
-      transform: scale(1.03);
+    section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    footer {
+    #main.blur {
+      filter: blur(5px);
+      pointer-events: none;
+    }
+
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      z-index: 2000;
+      transition: opacity 0.8s, transform 0.8s;
+    }
+
+    #intro.fade-out {
+      opacity: 0;
+      transform: scale(1.05);
+      pointer-events: none;
+    }
+
+    #intro img {
+      height: 25vw;
+      max-height: 250px;
+      width: auto;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      margin: 0 auto;
+      border-radius: 8px;
+      z-index: 2;
+    }
+
+    /* Total duration: 35s */
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: translateX(100%);
+      animation: slideInFade 35s infinite ease-in-out forwards;
+    }
+
+    .slide:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .slide:nth-child(2) {
+      animation-delay: 7s;
+    }
+
+    .slide:nth-child(3) {
+      animation-delay: 14s;
+    }
+
+    .slide:nth-child(4) {
+      animation-delay: 21s;
+    }
+
+    .slide:nth-child(5) {
+      animation-delay: 28s;
+    }
+
+    @keyframes slideInFade {
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+
+      5%,
+      20% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      25%,
+      100% {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .slide-title_tr {
+      position: absolute;
+      top: 24%;
+      left: 50%;
+      transform: translate(-50%, calc(-50% + 10%));
+      color: #ffffff;
+      font-size: 3vw;
+      font-family: "Orbitron", sans-serif;
+      text-transform: uppercase;
+      font-weight: 600;
       text-align: center;
-      padding: 30px;
-      color: #666;
-      font-size: 14px;
-      background: #111;
+      text-shadow: 2px 2px 10px #000;
+      pointer-events: none;
+      width: 90%;
+      opacity: 0;
+      animation: titleFadeUp 35s infinite ease-out forwards;
+    }
+
+    /* Title animation delayed 0.5s after slide */
+    .slide:nth-child(1) .slide-title_tr {
+      animation-delay: 0.5s;
+    }
+
+    .slide:nth-child(2) .slide-title_tr {
+      animation-delay: 7.5s;
+    }
+
+    .slide:nth-child(3) .slide-title_tr {
+      animation-delay: 14.5s;
+    }
+
+    .slide:nth-child(4) .slide-title_tr {
+      animation-delay: 21.5s;
+    }
+
+    .slide:nth-child(5) .slide-title_tr {
+      animation-delay: 28.5s;
+    }
+
+
+    @keyframes titleFadeUp {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% + 10%));
+      }
+
+      10% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+
+      90% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .centered-heading {
+      text-align: center;
+      font-size: 2em;
+      margin: 1em 0 0.5em;
+      font-weight: normal;
+    }
+
+    @media (max-width: 600px) {
+      .menu-icon {
+        font-size: 1.7em;
+      }
+
+      .logo {
+        height: 40px;
+      }
+
+      .header-contact {
+        font-size: 0.7em;
+      }
+
+      .content,
+      section {
+        padding: 0em;
+      }
+
+      .slide-title_tr {
+        font-size: 2.2em
+      }
     }
   </style>
 </head>
-<body>
-  <header>
-    <h1>MM Design</h1>
-    <p>Luxury Car Wrapping Specialists</p>
-  </header>
 
-  <section class="gallery">
-    <img src="1.jpg" alt="car "1" />
-    <img src="2.jpg" alt="car "2" />
-    <img src="3.jpg" alt="car "3" />
-    <img src="4.jpg" alt="car "4" />
+<body>
+
+  <!-- Intro Splash -->
+  <div id="intro">
+    <img src="intro_logo.jpg" alt="MM Design Logo" />
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <a href="#" onclick="showPage('wraps'); closeSidebar();">Home</a>
+    <a href="#" onclick="showPage('carwrap'); closeSidebar();">Car Wrap</a>
+    <a href="#" onclick="showPage('mods'); closeSidebar();">Modifications</a>
+    <a href="#" onclick="showPage('gallery'); closeSidebar();">Gallery</a>
+    <a href="#" onclick="showPage('contact'); closeSidebar();">Contact</a>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main">
+    <header id="header">
+      <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+      <div class="logo-wrapper">
+        <a href="#" onclick="goHome()">
+          <img src="header_logo.png" alt="MM Design Logo" class="logo" />
+        </a>
+      </div>
+      <div class="header-contact">
+        <span>📍 2008-2560 Shell Road<br>Richmond, BC, V6X 2P1<br></span>
+        <span>📞 +1 (778) 222-5888</span>
+      </div>
+    </header>
+
+    <div class="content">
+      <section id="wraps" class="active">
+        <div class="slideshow-container">
+          <div class="slide">
+            <img src="1.jpg" alt="Gallery Image 1" />
+            <div class="slide-title_tr">Est. 2012<br>Styled to Wrap, Designed to Last</div>
+          </div>
+          <div class="slide">
+            <img src="2.jpg" alt="Gallery Image 2" />
+            <div class="slide-title_tr">Paint Protection Film<br>Ceramic Coating & Modification</div>
+          </div>
+          <div class="slide">
+            <img src="3.jpg" alt="Gallery Image 3" />
+            <div class="slide-title_tr">Founder of The<br>Vancouver Sports Car Club</div>
+          </div>
+          <div class="slide">
+            <img src="4.jpg" alt="Gallery Image 4" />
+            <div class="slide-title_tr">500+ Color wrapped<br>Where Style Meets Protection</div>
+          </div>
+          <div class="slide">
+            <img src="5.jpg" alt="Gallery Image 5" />
+            <div class="slide-title_tr">15+ Years, 1000+ projects<br>Turning Cars Into Art</div>
+          </div>
+        </div>
+
+
+    </div>
+  </div>
+
   </section>
 
-  <footer>
-    &copy; 2025 MM Design. All rights reserved.
-  </footer>
+  <section id="carwrap" style="padding-top: 6em; padding-left: 4em; padding-right: 2em; padding-bottom: 3em">
+    <h2>Car Wrap</h2>
+    <p>Details about Car Wrap here.</p>
+
+    <div style="display: flex; justify-content: center; gap: 2em;">
+      <div style="flex: 1; max-width: 600px;">
+        <img id="brand-image" src="brand.png" style="width: 100%; display: block;" />
+      </div>
+    </div>
+
+  </section>
+  <section id="mods" style="padding-top: 6em; padding-left: 4em; padding-right: 2em; padding-bottom: 3em">
+    <h2>Modifications</h2>
+    <p>Details about Modifications here.</p>
+  </section>
+
+
+
+  <section id="gallery" style="padding-top: 6em; padding-left: 4em; padding-right: 2em; padding-bottom: 3em">
+    <h2 style="font-size: 2em;">Latest Projects</h2>
+    <h2 style="font-size: 2em;">Events</h2>
+  </section>
+
+
+
+
+
+  <section id="contact" style="padding-top: 8em; padding-left: 2em; padding-right: 2em; padding-bottom: 3em">
+
+    <!-- Info and Map Row -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1em;">
+
+      <!-- Contact Info -->
+      <div
+        style="flex: 1; min-width: 300px; max-width: 400px; margin-right: 1em; text-align: center; font-size: 1.2em;">
+        <h3 style="color: #00ffff; text-shadow: 0 0 2px #00ffff, 0 0 4px #00ffff, 0 0 6px #00ffff;">LOCATION</h3>
+        <p>2008-2560 Shell Road<br>Richmond, BC, V6X 2P1</p>
+
+        <h3 style="color: #00ffff; text-shadow: 0 0 2px #00ffff, 0 0 4px #00ffff, 0 0 6px #00ffff;">STORE HOURS</h3>
+        <p>Monday – Friday: 9:30 AM – 5:00 PM<br>Weekends: Closed</p>
+
+        <h3 style="color: #00ffff; text-shadow: 0 0 2px #00ffff, 0 0 4px #00ffff, 0 0 6px #00ffff;">PHONE</h3>
+        <p>
+          <a href="tel:+17782225888" style="color: inherit; text-decoration: none; font-weight: bold;">
+            +1 (778) 222-5888🔗
+          </a>
+        </p>
+
+        <h3 style="color: #00ffff; text-shadow: 0 0 2px #00ffff, 0 0 4px #00ffff, 0 0 6px #00ffff;">SOCIAL MEDIA</h3>
+        <p>WeChat: mark526</p>
+        <p>
+          <a href="https://instagram.com/mmdesign_car_wrap" target="_blank"
+            style="color: inherit; text-decoration: none; font-weight: bold;">
+            Instagram: mmdesign_car_wrap🔗
+          </a>
+        </p>
+      </div>
+
+      <!-- QR + Map Column -->
+      <div
+        style="flex: 1; min-width: 250px; max-width: 450px; margin-left: 2em; display: flex; flex-direction: column; align-items: center; gap: 1em; margin-top: 1.8em; margin-right: 2em">
+
+        <!-- Glowing border wrapper -->
+        <div style="
+        padding: 8px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+        background-color: rgba(0, 0, 0, 0.2); /* optional background behind the image */
+      ">
+          <img src="qr.png" alt="WeChat QR Code"
+            style="width: 100%; height: auto; max-width: 450px; filter: invert(1); border-radius: 8px;" />
+        </div>
+
+        <!-- Google Map iframe -->
+        <div
+          style="width: 100%; height: 280px; max-width: 450px; position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5214.5662736065515!2d-123.10424932363058!3d49.19518817137987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5486750a5b4b1e07%3A0x887c72c58480f4f!2sMM-Design!5e0!3m2!1sen!2sca!4v1748660563951!5m2!1sen!2sca"
+            style="border: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+  </div>
+  </div>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const main = document.getElementById('main');
+
+    function toggleSidebar() {
+      const isOpen = sidebar.style.width === '250px';
+      if (isOpen) {
+        closeSidebar();
+      } else {
+        sidebar.style.width = '250px';
+        main.classList.add('blur');
+      }
+    }
+
+    function closeSidebar() {
+      sidebar.style.width = '0';
+      main.classList.remove('blur');
+    }
+
+    function showPage(id) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function goHome() {
+      showPage('wraps');
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const intro = document.getElementById('intro');
+        intro.classList.add('fade-out');
+        setTimeout(() => { intro.style.display = 'none'; }, 800);
+      }, 2000);
+    });
+
+    document.addEventListener('click', (event) => {
+      const isClickInsideSidebar = sidebar.contains(event.target);
+      const isClickOnMenuIcon = event.target.classList.contains('menu-icon');
+      const isSidebarOpen = sidebar.style.width === '250px';
+
+      if (isSidebarOpen && !isClickInsideSidebar && !isClickOnMenuIcon) {
+        closeSidebar();
+      }
+    });
+  </script>
 </body>
+
 </html>
