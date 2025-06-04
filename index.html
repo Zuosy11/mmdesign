@@ -6,6 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MM Design</title>
@@ -128,10 +129,57 @@
       transform: translateY(0);
     }
 
+    [data-aos="fade-in"] {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    }
+
+    /* Animate in */
+    [data-aos="fade-in"].aos-animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #carwrap-inner {
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* IE and Edge */
+    }
+
+    #carwrap-inner::-webkit-scrollbar {
+      display: none;
+      /* Chrome, Safari, Opera */
+    }
+
     #main.blur {
       filter: blur(5px);
       pointer-events: none;
+      transition: filter 0.3s ease;
     }
+
+    #gallery {
+  position: relative; /* needed if widget is absolute */
+  padding: 0 !important; /* remove gallery paddings */
+  margin: 0;
+  height: 100vh; /* full viewport height */
+  width: 100vw;  /* full viewport width */
+  overflow: hidden; /* prevent scroll if needed */
+  color: white;
+}
+
+#gallery > behold-widget {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding-top: 5.5em;
+  border: none;
+  box-sizing: border-box;
+}
 
     #intro {
       position: fixed;
@@ -316,7 +364,28 @@
       .slide-title_tr {
         font-size: 2.2em
       }
-    }
+
+      #gallery {
+    height: auto;
+    overflow-x: auto;
+    overflow-y: auto;
+
+    /* Hide scrollbar (cross-browser) */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+  }
+
+  #gallery::-webkit-scrollbar {
+    display: none; /* Safari & Chrome */
+  }
+
+  #gallery > behold-widget {
+    width: 180vw;
+    height: auto;
+    min-height: calc(100vh - 5.5em);
+    padding-top: 6em;
+  }
+}
   </style>
 </head>
 
@@ -378,32 +447,169 @@
 
 
     </div>
-  </div>
-
+  
   </section>
 
-  <section id="carwrap" style="padding-top: 6em; padding-left: 4em; padding-right: 2em; padding-bottom: 3em">
-    <h2>Car Wrap</h2>
-    <p>Details about Car Wrap here.</p>
 
-    <div style="display: flex; justify-content: center; gap: 2em;">
-      <div style="flex: 1; max-width: 600px;">
-        <img id="brand-image" src="brand.png" style="width: 100%; display: block;" />
+
+
+
+  <section id="carwrap" style="
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+">
+
+    <div id="carwrap-inner" style="
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  ">
+
+      <!-- Page 1 -->
+      <div data-aos="fade-in" style="
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2em;
+    ">
+        <h2 data-aos="fade-in" data-aos-delay="100" style="font-size: 3em; margin-bottom: 1em; text-align: center;">
+          Your Choice
+        </h2>
+        <img data-aos="fade-in" data-aos-delay="300" src="choice.png" alt="Example of custom car wrap design options"
+          style="width: 90%; max-width: 800px; height: auto; display: block;" />
       </div>
+
+      <!-- Page 2 -->
+      <div data-aos="fade-in" style="
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2em;
+    ">
+        <h2 data-aos="fade-in" data-aos-delay="100" style="font-size: 3em; margin-bottom: 1em; text-align: center;">
+          Our Solution
+        </h2>
+        <img data-aos="fade-in" data-aos-delay="300" src="solution.png"
+          alt="High-quality vinyl wrap being applied to a car"
+          style="width: 90%; max-width: 800px; height: auto; display: block;" />
+      </div>
+
+      <!-- Page 3 -->
+      <div data-aos="fade-in" style="
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2em;
+    ">
+        <h2 data-aos="fade-in" data-aos-delay="100" style="font-size: 3em; margin-bottom: 1em; text-align: center;">
+          Featured Brands
+        </h2>
+        <img data-aos="fade-in" data-aos-delay="300" id="brand-image" src="brands.png"
+          alt="Logos of trusted vinyl brands featured in our car wraps"
+          style="width: 90%; max-width: 800px; height: auto; display: block;" />
+      </div>
+
+      <!-- Page 4 -->
+<div data-aos="fade-in" style="
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background: black;
+  color: white;
+  position: relative;
+">
+
+  <!-- Slideshow container with relative positioning -->
+  <div class="slideshow-container" style="position: relative; width: 100%; height: 100%;">
+
+
+
+    <!-- Slides -->
+    <div class="slide">
+      <img src="6.jpg" alt="Gallery Image 6" />
+    </div>
+    <div class="slide">
+      <img src="7.jpg" alt="Gallery Image 7" />
+    </div>
+    <div class="slide">
+      <img src="8.jpg" alt="Gallery Image 8" />
+    </div>
+    <div class="slide">
+      <img src="9.jpg" alt="Gallery Image 9" />
+    </div>
+    <div class="slide">
+      <img src="10.jpg" alt="Gallery Image 10" />
     </div>
 
-  </section>
-  <section id="mods" style="padding-top: 6em; padding-left: 4em; padding-right: 2em; padding-bottom: 3em">
-    <h2>Modifications</h2>
-    <p>Details about Modifications here.</p>
+  </div>
+  
+<a href="#gallery" 
+   onclick="event.preventDefault(); showPage('gallery');" 
+   style="
+     position: absolute;
+     bottom: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     z-index: 10;
+     background: rgba(0, 0, 0, 0.5);
+     color: white;
+     text-decoration: none;
+     padding: 0.6em 1.2em;
+     border: 2px solid white;
+     border-radius: 8px;
+     font-weight: bold;
+     backdrop-filter: blur(6px);
+     transition: background 0.3s ease;
+   " 
+   onmouseover="this.style.background='rgba(0,0,0,0.7)'" 
+   onmouseout="this.style.background='rgba(0,0,0,0.5)'"
+>
+  View Our Latest Projects
+</a>
+
+</div>
+
+
   </section>
 
 
 
-  <section id="gallery" style="padding-top: 6em; padding-left: 4em; padding-right: 2em; padding-bottom: 3em">
-    <h2 style="font-size: 2em;">Latest Projects</h2>
-    <h2 style="font-size: 2em;">Events</h2>
-  </section>
+
+
+
+
+
+
+  <section id="mods" style="padding-top: 0; padding-left: 0; padding-right: 0; padding-bottom: 0">
+  <img src="mod.png" alt="Modifications Image" style="width: 100vw; height: 100vh; object-fit: cover; display: block; margin: 0; padding: 0;">
+</section>
+
+
+
+
+
+
+
+
+
+
+  <section id="gallery" style="padding-top: 1em; padding-left: 4em; padding-right: 2em; padding-bottom: 1em; color: white;">
+    <behold-widget feed-id="PENTwt816Fh1m9NahYKy"></behold-widget>
+</section>
 
 
 
@@ -475,29 +681,39 @@
 
   </div>
   </div>
+  
 
+  <!-- Your existing sidebar/main script -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Then call AOS.init() -->
   <script>
     const sidebar = document.getElementById('sidebar');
     const main = document.getElementById('main');
 
     function toggleSidebar() {
-      const isOpen = sidebar.style.width === '250px';
-      if (isOpen) {
-        closeSidebar();
-      } else {
-        sidebar.style.width = '250px';
-        main.classList.add('blur');
-      }
-    }
+  const isOpen = sidebar.style.width === '250px';
+  if (isOpen) {
+    closeSidebar();
+  } else {
+    sidebar.style.width = '250px';
+    main.classList.add('blur');
+  }
+}
 
-    function closeSidebar() {
-      sidebar.style.width = '0';
-      main.classList.remove('blur');
-    }
+function closeSidebar() {
+  sidebar.style.width = '0';
+  main.classList.remove('blur');
+}
 
     function showPage(id) {
       document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+      const target = document.getElementById(id);
+      if (target) {
+        target.classList.add('active');
+
+        AOS.refresh();
+      }
     }
 
     function goHome() {
@@ -505,23 +721,58 @@
     }
 
     window.addEventListener('load', () => {
+      // Intro fade-out example, keep your existing logic
       setTimeout(() => {
         const intro = document.getElementById('intro');
-        intro.classList.add('fade-out');
-        setTimeout(() => { intro.style.display = 'none'; }, 800);
+        if (intro) {
+          intro.classList.add('fade-out');
+          setTimeout(() => {
+            intro.style.display = 'none';
+          }, 800);
+        }
       }, 2000);
+
+      // Intersection Observer setup for custom scroll container
+      const container = document.querySelector('#carwrap-inner');
+      const items = container.querySelectorAll('[data-aos]');
+
+      const observerOptions = {
+        root: container,         // observe visibility relative to scroll container
+        rootMargin: '0px',
+        threshold: 0.1           // triggers when 10% visible
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('aos-animate');
+          } else {
+            entry.target.classList.remove('aos-animate');
+          }
+        });
+      }, observerOptions);
+
+      items.forEach(item => observer.observe(item));
     });
 
     document.addEventListener('click', (event) => {
-      const isClickInsideSidebar = sidebar.contains(event.target);
+      const isClickInsideSidebar = sidebar && sidebar.contains(event.target);
       const isClickOnMenuIcon = event.target.classList.contains('menu-icon');
-      const isSidebarOpen = sidebar.style.width === '250px';
+      const isSidebarOpen = sidebar && sidebar.style.width === '250px';
 
       if (isSidebarOpen && !isClickInsideSidebar && !isClickOnMenuIcon) {
         closeSidebar();
       }
     });
+
+ (() => {
+    const d=document,s=d.createElement("script");s.type="module";
+    s.src="https://w.behold.so/widget.js";d.head.append(s);
+  })();
+
+  
   </script>
+
 </body>
 
 </html>
