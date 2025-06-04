@@ -368,6 +368,15 @@
         font-size: 1.5em
       }
 
+      #wraps {
+    touch-action: none;          /* Disable pan and zoom */
+    overflow: hidden;            /* Prevent scrollbars */
+  }
+
+  .slideshow-container {
+    overscroll-behavior: none;   /* Prevent scroll chaining */
+  }
+
       #gallery {
   height: auto;
   overflow-x: hidden;   /* Disable horizontal scroll */
@@ -475,6 +484,7 @@
   opacity: 0.3;
   cursor: default;
 }
+
   </style>
 </head>
 
@@ -770,7 +780,7 @@
         <p style="color: inherit; text-decoration: none; font-weight: bold;">2008-2560 Shell Road<br>Richmond, BC, V6X 2P1</p>
 
         <h3 style="color: #00ffff;">STORE HOURS</h3>
-        <p>Mon. – Fri.: 9:30 AM – 5:00 PM<br>Weekends: Closed</p>
+        <p>Weekdays: 9:30 AM – 5:00 PM<br>Weekends: Closed</p>
 
         <h3 style="color: #00ffff;">PHONE</h3>
         <p>
@@ -989,6 +999,19 @@ carousel.addEventListener('touchend', e => {
 
 // Initialize
 updateCarousel();
+
+
+if (window.innerWidth <= 768) {
+    const slides = document.querySelectorAll('#wraps .slide img');
+    const mobileImages = ['21.jpg', '22.jpg', '23.jpg', '24.jpg', '25.jpg'];
+
+    slides.forEach((img, index) => {
+      if (mobileImages[index]) {
+        img.src = mobileImages[index];
+        img.alt = `Mobile Gallery Image ${index + 1}`;
+      }
+    });
+  }
 
   </script>
 
