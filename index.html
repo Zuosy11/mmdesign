@@ -386,6 +386,77 @@
     padding-top: 6em;
   }
 }
+
+
+/* Carousel container */
+#carousel-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* The horizontal carousel */
+#carousel {
+  display: flex;
+  width: 300vw; /* 3 slides * 100vw */
+  height: 100vh;
+  transition: transform 0.5s ease;
+}
+
+/* Each carousel item */
+.carousel-item {
+  flex: 0 0 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Overlay text always visible */
+.overlay-text {
+  position: absolute;
+  bottom: 40px;
+  left: 30px;               /* background box position from slide left */
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 5px 50px 5px 20px;  /* top 10px, right 50px, bottom 10px, left 20px */
+  border-radius: 10px;
+  max-width: 70%;
+  opacity: 1;
+  pointer-events: auto;
+  box-sizing: border-box;
+}
+
+/* Navigation buttons */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 10;
+  user-select: none;
+  border-radius: 5px;
+}
+
+#prevBtn {
+  left: 10px;
+}
+
+#nextBtn {
+  right: 10px;
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
   </style>
 </head>
 
@@ -572,6 +643,7 @@
      border: 2px solid white;
      border-radius: 8px;
      font-weight: bold;
+     font-size: 2rem;
      backdrop-filter: blur(6px);
      transition: background 0.3s ease;
    " 
@@ -594,9 +666,62 @@
 
 
 
-  <section id="mods" style="padding-top: 0; padding-left: 0; padding-right: 0; padding-bottom: 0">
-  <img src="mod.png" alt="Modifications Image" style="width: 100vw; height: 100vh; object-fit: cover; display: block; margin: 0; padding: 0;">
+ <section id="mods" style="padding: 0;">
+  <div id="carousel-wrapper">
+    <button id="prevBtn" class="nav-btn" aria-label="Previous Slide">&#10094;</button>
+    <button id="nextBtn" class="nav-btn" aria-label="Next Slide">&#10095;</button>
+
+    <div id="carousel">
+      <div class="carousel-item" style="background-image: url('88.jpg')">
+        <div class="overlay-text" style="position: absolute; bottom: 40px; left: 30px; color: white; padding: 1em; max-width: 80%;">
+          <h2 style="font-size: 3rem; margin: 0; font-weight: 800; letter-spacing: 1px;">CUSTOM FORGED RIMS</h2>
+          <p style="font-size: 1.5rem; margin-top: 0; margin-bottom: 8px;letter-spacing: 0.5px;">TAILORED TO YOUR RIDE,<br>FEATURING MANSORY, HRE, AND MORE!</p>
+        </div>
+      </div>
+      <div class="carousel-item" style="background-image: url('888.jpg')">
+        <div class="overlay-text" style="position: absolute; bottom: 40px; left: 30px; color: white; padding: 1em; max-width: 80%;">
+          <h2 style="font-size: 3rem; margin: 0; font-weight: 800; letter-spacing: 1px;">CARBON FIBRE BODYKITS</h2>
+          <p style="font-size: 1.5rem; margin-top: 0; margin-bottom: 8px; letter-spacing: 0.5px;">EXPRESSING YOUR STYLE,<br>FEATURING BRABUS, MANSORY, AND MORE!</p>
+        </div>
+      </div>
+      <div class="carousel-item" style="background-image: url('8888.jpg')">
+        <div class="overlay-text" style="position: absolute; bottom: 40px; left: 30px; color: white; padding: 1em; max-width: 80%;">
+          <h2 style="font-size: 3rem; margin: 0; font-weight: 800; letter-spacing: 1px;">EXHAUST SYSTEMS</h2>
+          <p style="font-size: 1.5rem; margin-top: 0; margin-bottom: 8px; letter-spacing: 0.5px;">SYMPHONY OF YOUR ENGINE,<br>FEATURING AKRAPOVIC, FI EXHAUST, AND MORE!</p>
+        </div>
+      </div>
+      <div class="carousel-item" style="background-image: url('12.jpg')">
+        <a href="#contact" 
+   onclick="event.preventDefault(); showPage('contact');" 
+   style="
+     position: absolute;
+     bottom: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     z-index: 10;
+     background: rgba(0, 0, 0, 0.5);
+     color: white;
+     text-decoration: none;
+     padding: 0.6em 1.2em;
+     border: 2px solid white;
+     border-radius: 8px;
+     font-weight: bold;
+     font-size: 2rem;
+     backdrop-filter: blur(6px);
+     transition: background 0.3s ease;
+   " 
+   onmouseover="this.style.background='rgba(0,0,0,0.7)'" 
+   onmouseout="this.style.background='rgba(0,0,0,0.5)'"
+>
+  CONTACT NOW 👈
+</a>
+
+      </div>
+    </div>
+  </div>
 </section>
+
+
 
 
 
@@ -770,7 +895,83 @@ function closeSidebar() {
     s.src="https://w.behold.so/widget.js";d.head.append(s);
   })();
 
-  
+  const carousel = document.getElementById('carousel');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const totalSlides = carousel.children.length;
+let currentIndex = 0;
+
+function updateCarousel() {
+  carousel.style.transition = 'transform 0.5s ease';
+  carousel.style.transform = `translateX(-${currentIndex * 100}vw)`;
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex === totalSlides - 1;
+}
+
+prevBtn.addEventListener('click', () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    updateCarousel();
+  }
+});
+
+nextBtn.addEventListener('click', () => {
+  if (currentIndex < totalSlides - 1) {
+    currentIndex++;
+    updateCarousel();
+  }
+});
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  }
+  if (e.key === 'ArrowRight') {
+    if (currentIndex < totalSlides - 1) {
+      currentIndex++;
+      updateCarousel();
+    }
+  }
+});
+
+// Swipe support
+let startX = 0;
+let isDragging = false;
+
+carousel.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+  isDragging = true;
+  carousel.style.transition = ''; // disable transition while dragging
+});
+
+carousel.addEventListener('touchmove', e => {
+  if (!isDragging) return;
+  const currentX = e.touches[0].clientX;
+  const deltaX = currentX - startX;
+  const moveX = -currentIndex * window.innerWidth + deltaX;
+  carousel.style.transform = `translateX(${moveX}px)`;
+});
+
+carousel.addEventListener('touchend', e => {
+  if (!isDragging) return;
+  isDragging = false;
+  const endX = e.changedTouches[0].clientX;
+  const deltaX = endX - startX;
+
+  if (deltaX > 50 && currentIndex > 0) {
+    currentIndex--;
+  } else if (deltaX < -50 && currentIndex < totalSlides - 1) {
+    currentIndex++;
+  }
+  updateCarousel();
+});
+
+// Initialize
+updateCarousel();
+
   </script>
 
 </body>
