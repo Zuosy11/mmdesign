@@ -202,7 +202,7 @@
       width: 100vw;
       height: auto;
       margin: 0;
-      padding-top: 5.5em;
+      padding-top: 5em;
       border: none;
       box-sizing: border-box;
       scrollbar-width: none;
@@ -363,12 +363,19 @@
       }
     }
 
-    .centered-heading {
-      text-align: center;
-      font-size: 2em;
-      margin: 1em 0 0.5em;
-      font-weight: normal;
-    }
+    /* Blurred background layer */
+.slide-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px) brightness(0.7) saturate(1.2);
+  transform: scale(1.5); /* prevents blur edge clipping */
+  z-index: 0;
+}
 
 
     @media (max-width: 600px) {
@@ -395,12 +402,13 @@
       }
 
       .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      user-select: none;
-      pointer-events: none;
-    }
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+}
 
       #wraps {
     touch-action: none;          /* Disable pan and zoom */
@@ -627,7 +635,7 @@
             Your Choice
           </h2>
           <img data-aos="fade-in" data-aos-delay="300" src="choice.png" alt="Example of custom car wrap design options"
-            style="width: 100%; max-width: 900px; height: auto; display: block;  margin: 0 auto;" />
+            style="width: 100%; max-width: 800px; height: auto; display: block;  margin: 0 auto;" />
         </div>
 
         <!-- Page 2 -->
@@ -646,7 +654,7 @@
           </h2>
           <img data-aos="fade-in" data-aos-delay="300" src="solution.png"
             alt="High-quality vinyl wrap being applied to a car"
-            style="width: 100%; max-width: 900px; height: auto; display: block;" />
+            style="width: 100%; max-width: 800px; height: auto; display: block;" />
         </div>
 
         <!-- Page 3 -->
@@ -1098,6 +1106,21 @@
       });
     }
 
+
+    if (window.innerWidth <= 768) {
+    const slides = document.querySelectorAll('.slide');
+
+    slides.forEach((slide) => {
+      const img = slide.querySelector('img');
+      if (!img) return;
+
+      // Create a blurred background
+      let bg = document.createElement('div');
+      bg.className = 'slide-bg';
+      bg.style.backgroundImage = `url('${img.src}')`;
+      slide.prepend(bg);
+    });
+  }
 
   </script>
 
