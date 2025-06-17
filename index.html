@@ -25,21 +25,24 @@
     }
 
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 80px;
-      padding: 0 2em;
-      background: rgba(0, 0, 0, 0.75);
-      color: white;
-      z-index: 1000;
-      border-bottom: 4px solid #00ffff;
-      box-shadow: 0 2px 8px 0 #00ffff;
-      display: flex;
-      align-items: center;
-      box-sizing: border-box;
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  padding: 0 2em;
+  background: rgba(0, 0, 0, 0.75); /* match .show-title */
+  color: white;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+backdrop-filter: blur(5px);
+  /* Optional: subtle shadow for depth */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  border-bottom: 4px solid #00ffff;
+box-shadow: 0 2px 8px 0 #00ffff;
+}
 
     .menu-icon {
       font-size: 2em;
@@ -459,6 +462,9 @@
         padding: 0.5em 1em !important;
       }
 
+
+
+
     }
 
 
@@ -535,7 +541,94 @@
       cursor: default;
     }
 
-    
+    .show {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+.show::-webkit-scrollbar {
+  display: none;
+}
+
+.show-slide {
+  position: relative;
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  flex-direction: column;
+
+  opacity: 0;
+  
+  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.show-slide.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.show-slide img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 1;
+  
+  transform: scale(1);
+  will-change: transform;
+}
+
+.show-slide.visible img {
+  transform: scale(1);
+}
+
+.show-title {
+  position: absolute;
+  z-index: 2;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+  /*background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.2));*/
+  padding: 3rem 1rem;
+  width: 100vw;
+  box-sizing: border-box;
+  margin: 5rem 0 0 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+  /*box-shadow: 0 4px 8px rgba(0,0,0,0.3);*/
+  /*backdrop-filter: blur(4px);*/
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1) 0.3s, 
+              transform 0.85s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+  will-change: opacity, transform;
+}
+
+.show-slide.visible .show-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+
+
+
+
   </style>
 </head>
 
@@ -575,28 +668,29 @@
       <section id="wraps" class="active">
 
           
-        <div class="slideshow-container">
-          <div class="slide">
-            <img src="1.jpg" alt="Gallery Image 1" />
-            <div class="slide-title_tr">Est. 2012<br>Styled to Wrap, Designed to Last</div>
-          </div>
-          <div class="slide">
-            <img src="2.jpg" alt="Gallery Image 2" />
-            <div class="slide-title_tr">Car Wrap<br>Ceramic Coating & Modification</div>
-          </div>
-          <div class="slide">
-            <img src="3.jpg" alt="Gallery Image 3" />
-            <div class="slide-title_tr">Founder of The<br>Vancouver Sports Car Club</div>
-          </div>
-          <div class="slide">
-            <img src="4.jpg" alt="Gallery Image 4" />
-            <div class="slide-title_tr">500+ Color wrapped<br>Where Style Meets Protection</div>
-          </div>
-          <div class="slide">
-            <img src="5.jpg" alt="Gallery Image 5" />
-            <div class="slide-title_tr">15+ Years, 1000+ projects<br>Turning Cars Into Art</div>
-          </div>
-        </div>
+        <div class="show">
+  <div class="show-slide">
+    <img src="1.jpg" alt="Gallery Image 1" />
+    <div class="show-title">Est. 2012<br>Styled to Wrap, Designed to Last</div>
+  </div>
+  <div class="show-slide">
+    <img src="2.jpg" alt="Gallery Image 2" />
+    <div class="show-title">Car Wrap<br>Ceramic Coating & Modification</div>
+  </div>
+  <div class="show-slide">
+    <img src="3.jpg" alt="Gallery Image 3" />
+    <div class="show-title">Founder of The<br>Vancouver Sports Car Club</div>
+  </div>
+  <div class="show-slide">
+    <img src="4.jpg" alt="Gallery Image 4" />
+    <div class="show-title">500+ Color wrapped<br>Where Style Meets Protection</div>
+  </div>
+  <div class="show-slide">
+    <img src="5.jpg" alt="Gallery Image 5" />
+    <div class="show-title">15+ Years, 1000+ projects<br>Turning Cars Into Art</div>
+  </div>
+</div>
+
 
 
     </div>
@@ -635,7 +729,9 @@
             Your Choice
           </h2>
           <img data-aos="fade-in" data-aos-delay="300" src="choice.png" alt="Example of custom car wrap design options"
-            style="width: 100%; max-width: 900px; height: auto; display: block;  margin: 0 auto;" />
+            style="width: 100%; max-width: 900px; height: auto; object-fit: contain; display: block;  margin: 0 auto;" />
+
+            
         </div>
 
         <!-- Page 2 -->
@@ -655,6 +751,8 @@
           <img data-aos="fade-in" data-aos-delay="300" src="solution.png"
             alt="High-quality vinyl wrap being applied to a car"
             style="width: 100%; max-width: 900px; height: auto; object-fit: contain; display: block;" />
+
+            
         </div>
 
         <!-- Page 3 -->
@@ -674,6 +772,8 @@
           <img data-aos="fade-in" data-aos-delay="300" id="brand-image" src="brands.png"
             alt="Logos of trusted vinyl brands featured in our car wraps"
             style="width: 100%; max-width: 900px; height: auto; display: block;" />
+            
+            
         </div>
 
         <!-- Page 4 -->
@@ -1053,58 +1153,48 @@
 
     updateCarousel(); // Initialize
 
-    // Mobile image replacement
-    if (window.innerWidth <= 768) {
-      const slides = document.querySelectorAll('#wraps .slide');
-      const mobileImages = ['21.jpg', '22.jpg', '23.jpg', '24.jpg', '25.jpg'];
+    // Mobile image replacement for .show section
+if (window.innerWidth <= 768) {
+  const slides = document.querySelectorAll('.show .show-slide');
+  const mobileImages = ['21.jpg', '22.jpg', '23.jpg', '24.jpg', '25.jpg'];
 
-      slides.forEach((slide, index) => {
-        const img = slide.querySelector('img');
-        if (!img) return;
+  slides.forEach((slide, index) => {
+    const img = slide.querySelector('img');
+    if (!img) return;
 
-        // Replace image source and alt text
-        if (mobileImages[index]) {
-          img.src = mobileImages[index];
-          img.alt = `Mobile Gallery Image ${index + 1}`;
-        }
+    if (mobileImages[index]) {
+      img.src = mobileImages[index];
+      img.alt = `Mobile Gallery Image ${index + 1}`;
+      
 
-        
-      });
+      // Apply object-fit contain
+      img.style.objectFit = 'contain';
+      img.style.position = 'relative';
+      img.style.zIndex = '2';
+
+      // Create a blurred background image
+      const bg = document.createElement('img');
+      bg.src = mobileImages[index];
+      bg.alt = '';
+      bg.style.position = 'absolute';
+      bg.style.top = '0';
+      bg.style.left = '0';
+      bg.style.width = '100%';
+      bg.style.height = '100%';
+      bg.style.objectFit = 'cover';
+      bg.style.filter = 'blur(20px) brightness(0.7)';
+      bg.style.zIndex = '1';
+      bg.style.pointerEvents = 'none';
+
+      // Insert the background before the main image
+      slide.insertBefore(bg, img);
     }
+  });
+}
 
-    // ✅ One-swipe-per-section for #wraps (AOS section scroll lock)
-    if (window.innerWidth <= 768) {
-      const wraps = document.getElementById('wraps');
-      const sections = wraps.querySelectorAll('section');
-      let swipeIndex = 0;
-      let swipeStartY = 0;
-      let isSwiping = false;
 
-      wraps.addEventListener('touchstart', (e) => {
-        swipeStartY = e.touches[0].clientY;
-      });
 
-      wraps.addEventListener('touchmove', (e) => {
-        if (isSwiping) return;
-
-        const currentY = e.touches[0].clientY;
-        const deltaY = currentY - swipeStartY;
-
-        if (Math.abs(deltaY) > 50) { // Swipe threshold
-          if (deltaY < 0 && swipeIndex < sections.length - 1) {
-            swipeIndex++;
-          } else if (deltaY > 0 && swipeIndex > 0) {
-            swipeIndex--;
-          }
-          isSwiping = true;
-          sections[swipeIndex].scrollIntoView({ behavior: 'smooth' });
-
-          setTimeout(() => {
-            isSwiping = false;
-          }, 1000); // lock to prevent multiple in a row
-        }
-      });
-    }
+    
 
 
     if (window.innerWidth <= 768) {
@@ -1121,6 +1211,113 @@
       slide.prepend(bg);
     });
   }
+
+(() => {
+  const container = document.querySelector('.show');
+  const slides = document.querySelectorAll('.show-slide');
+
+  let currentIndex = 0;
+  let isThrottled = false;
+  let scrollTimeout;
+
+  // IntersectionObserver to toggle 'visible' class for fade/slide animation
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        entry.target.classList.toggle('visible', entry.isIntersecting);
+      });
+    },
+    { threshold: 0.5 }
+  );
+  slides.forEach(slide => observer.observe(slide));
+
+  // Update currentIndex when user scroll finishes (debounced)
+  container.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const slideHeight = container.clientHeight;
+      const scrollTop = container.scrollTop;
+      currentIndex = Math.round(scrollTop / slideHeight);
+      isThrottled = false;
+      slides.forEach(s => (s.style.pointerEvents = ''));
+    }, 250); // debounce scroll settling
+  });
+
+  // Scroll to a given slide index smoothly and lock pointer events during animation
+  function scrollToIndex(index) {
+    const slideHeight = container.clientHeight;
+    const targetScrollTop = index * slideHeight;
+
+    slides.forEach(s => (s.style.pointerEvents = 'none'));
+    container.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
+
+    setTimeout(() => {
+      isThrottled = false;
+      slides.forEach(s => (s.style.pointerEvents = ''));
+    }, 750); // duration slightly less than CSS transition
+  }
+
+  // Wheel event: one full slide per scroll, throttle events
+  container.addEventListener(
+    'wheel',
+    e => {
+      if (isThrottled) {
+        e.preventDefault();
+        return;
+      }
+      isThrottled = true;
+
+      if (e.deltaY > 0 && currentIndex < slides.length - 1) {
+        currentIndex++;
+      } else if (e.deltaY < 0 && currentIndex > 0) {
+        currentIndex--;
+      }
+
+      scrollToIndex(currentIndex);
+      e.preventDefault();
+    },
+    { passive: false }
+  );
+
+  // Touch swipe support
+  let touchStartY = 0;
+  const swipeThreshold = 200;
+
+  container.addEventListener(
+    'touchstart',
+    e => {
+      touchStartY = e.changedTouches[0].clientY;
+    },
+    { passive: true }
+  );
+
+  container.addEventListener(
+    'touchend',
+    e => {
+      if (isThrottled) return;
+
+      const touchEndY = e.changedTouches[0].clientY;
+      const diff = touchStartY - touchEndY;
+
+      if (Math.abs(diff) > swipeThreshold) {
+        isThrottled = true;
+
+        if (diff > 0 && currentIndex < slides.length - 1) {
+          currentIndex++;
+        } else if (diff < 0 && currentIndex > 0) {
+          currentIndex--;
+        }
+
+        scrollToIndex(currentIndex);
+      }
+    },
+    { passive: true }
+  );
+})();
+
+
+
+
 
   </script>
 
