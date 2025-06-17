@@ -168,6 +168,7 @@ box-shadow: 0 2px 8px 0 #00ffff;
       /* Firefox */
       -ms-overflow-style: none;
       /* IE and Edge */
+      overscroll-behavior: contain;
     }
 
     #inner::-webkit-scrollbar {
@@ -379,7 +380,12 @@ box-shadow: 0 2px 8px 0 #00ffff;
   transform: scale(1.5); /* prevents blur edge clipping */
   z-index: 0;
 }
-
+#mods {
+  overscroll-behavior: contain; /* Prevents scroll chaining */
+  touch-action: pan-x; /* Allow horizontal swiping only */
+  overflow-y: hidden; /* Prevent vertical scroll */
+  height: 100vh; /* Optional: keep it full-screen */
+}
 
     @media (max-width: 600px) {
       .menu-icon {
@@ -461,6 +467,23 @@ box-shadow: 0 2px 8px 0 #00ffff;
         font-size: 0.9rem !important;
         padding: 0.5em 1em !important;
       }
+
+      .show-title {
+  position: absolute !important;
+  z-index: 2 !important;
+  color: white !important;
+  font-size: 2em !important;
+  text-align: center !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding-top: 2em !important;
+  margin: 5rem 0 0 0 !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7) !important; /* This is text glow, should be fine */
+  backdrop-filter: none !important;
+}
 
 
 
@@ -600,16 +623,16 @@ box-shadow: 0 2px 8px 0 #00ffff;
   position: absolute;
   z-index: 2;
   color: white;
-  font-size: 2rem;
+  font-size: 2.5rem;
   text-align: center;
-  /*background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.2));*/
-  padding: 3rem 1rem;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.2));
+  padding: 2rem 1rem;
   width: 100vw;
   box-sizing: border-box;
-  margin: 5rem 0 0 0;
+  margin: 2.5rem 0 0 0;
   text-shadow: 0 2px 4px rgba(0,0,0,0.7);
-  /*box-shadow: 0 4px 8px rgba(0,0,0,0.3);*/
-  /*backdrop-filter: blur(4px);*/
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  backdrop-filter: blur(4px);
 
   opacity: 0;
   transform: translateY(20px);
@@ -683,11 +706,11 @@ box-shadow: 0 2px 8px 0 #00ffff;
   </div>
   <div class="show-slide">
     <img src="4.jpg" alt="Gallery Image 4" />
-    <div class="show-title">500+ Color wrapped<br>Where Style Meets Protection</div>
+    <div class="show-title">500+ Color Wrapped<br>Where Style Meets Protection</div>
   </div>
   <div class="show-slide">
     <img src="5.jpg" alt="Gallery Image 5" />
-    <div class="show-title">15+ Years, 1000+ projects<br>Turning Cars Into Art</div>
+    <div class="show-title">15+ Years, 1000+ Projects<br>Turning Cars Into Art</div>
   </div>
 </div>
 
@@ -722,14 +745,14 @@ box-shadow: 0 2px 8px 0 #00ffff;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 2em;
-      padding-top: 1em;
+      padding: 1em;
+      padding-top: 2em;
     ">
           <h2 data-aos="fade-in" data-aos-delay="100" style="font-size: 2em; margin-bottom: 1em; text-align: center;">
             Your Choice
           </h2>
           <img data-aos="fade-in" data-aos-delay="300" src="choice.png" alt="Example of custom car wrap design options"
-            style="width: 100%; max-width: 900px; height: auto; object-fit: contain; display: block;  margin: 0 auto;" />
+            style="width: 100%; max-width: 900px; height: auto; object-fit: contain; display: block; " />
 
             
         </div>
@@ -742,7 +765,7 @@ box-shadow: 0 2px 8px 0 #00ffff;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 2em;
+      padding: 1em;
       padding-top: 1em;
     ">
           <h2 data-aos="fade-in" data-aos-delay="100" style="font-size: 2em; margin-bottom: 1em; text-align: center;">
@@ -1314,10 +1337,6 @@ if (window.innerWidth <= 768) {
     { passive: true }
   );
 })();
-
-
-
-
 
   </script>
 
